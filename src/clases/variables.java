@@ -12,7 +12,7 @@ public class variables {
     long TL;
     String MTDP;
     int TC;
-
+  
     public variables(String Nombre, String Apellido, int Dia, int Mes, int Año, String TD, String CE, int ND, long TL, String MTDP, int TC) {
         this.Nombre = Nombre;
         this.Apellido = Apellido;
@@ -27,7 +27,7 @@ public class variables {
         this.TC = TC;
     }
 
-    
+
     
 
     public String getNombre() {

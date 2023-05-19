@@ -4,9 +4,11 @@
  */
 package interfaces;
 
-import clases.Arraylist;
-import clases.controladorlogin;
+import clases.controlador;
+import clases.loginvar;
+import clases.variables;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,12 +16,18 @@ import javax.swing.JOptionPane;
  * @author SUBLIMINADOS
  */
 public class Login extends javax.swing.JFrame {
-    private Arraylist loginn;
+
+    private ArrayList<loginvar> login;
+
     public Login() {
+        login = new ArrayList<>();
         initComponents();
         this.setLocationRelativeTo(null);
-        loginn = new Arraylist();
+        // Creamos un usuario de prueba para entrar
+        login.add(new controlador("Prueba", "Prueba"));
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,8 +48,7 @@ public class Login extends javax.swing.JFrame {
         usertext = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         passtext = new javax.swing.JPasswordField();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -102,29 +109,13 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel2.add(passtext, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 340, -1));
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("INGRESAR");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 120, 50));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 130, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,47 +149,53 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_usertextActionPerformed
 
     private void usertextMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usertextMousePressed
-        if (usertext.getText().equals("INGRESE SU NOMBRE DE USUARIO")){
+        if (usertext.getText().equals("INGRESE SU NOMBRE DE USUARIO")) {
             usertext.setText("");
             usertext.setForeground(Color.white);
         }
-        if (String.valueOf(passtext.getPassword()).isEmpty()){
+        if (String.valueOf(passtext.getPassword()).isEmpty()) {
             passtext.setText("********");
             passtext.setForeground(Color.gray);
         }
-        
+
     }//GEN-LAST:event_usertextMousePressed
 
     private void passtextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passtextActionPerformed
-      
+
     }//GEN-LAST:event_passtextActionPerformed
 
     private void passtextMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passtextMousePressed
-        if (String.valueOf(passtext.getPassword()).equals("*********")){
+        if (String.valueOf(passtext.getPassword()).equals("*********")) {
             passtext.setText("");
             passtext.setForeground(Color.white);
         }
-        if (usertext.getText().isEmpty()){
+        if (usertext.getText().isEmpty()) {
             usertext.setText("INGRESE SU NOMBRE DE USUARIO");
             usertext.setForeground(Color.gray);
         }
     }//GEN-LAST:event_passtextMousePressed
 
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-        String username = usertext.getText();
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String usuario = usertext.getText();
         String password = new String(passtext.getPassword());
-           if(loginn.comprobarUsuario(username, password)){
+
+        if (validarCredenciales(usuario, password)) {
             this.setVisible(false);
             new InterAdmin().setVisible(true);
-        } else{
-            JOptionPane.showMessageDialog(null, "Usuario y contraseña incorrecta\n"
-                    + "Intentelo nuevamente", "ERROR", JOptionPane.ERROR_MESSAGE);
-           }
-    }//GEN-LAST:event_jLabel3MousePressed
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private boolean validarCredenciales(String usuario, String contraseña) {
+        for (loginvar usuarios : login) {
+            if (usuarios.getUser().equals(usuario) && usuarios.getPassword().equals(contraseña)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -232,12 +229,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbinsc;

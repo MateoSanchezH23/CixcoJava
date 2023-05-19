@@ -4,8 +4,7 @@
  */
 package interfaces;
 
-import clases.Arraylist;
-import clases.controladorlogin;
+import clases.controlador;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +13,8 @@ import javax.swing.JOptionPane;
  */
 public class InterAdmin extends javax.swing.JFrame {
 
-    private Arraylist loginn;
+
     public InterAdmin() {
-        loginn = new Arraylist();
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -152,7 +150,7 @@ public class InterAdmin extends javax.swing.JFrame {
         String userr = JOptionPane.showInputDialog("Ingrese el nombre de usuario del nuevo administrador");
         String password = JOptionPane.showInputDialog("Ingrese la contraseña del nuevo adminsitrador");
         JOptionPane.showMessageDialog(null, "Usuario creado exitosamente", "Register",  JOptionPane.YES_OPTION);
-        loginn.agregarUsuario(userr, password);
+        
     }//GEN-LAST:event_jAñadirAdministrador6MousePressed
 
     private void jVolverinicio2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jVolverinicio2MousePressed
